@@ -1,0 +1,189 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+}
+html{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+}
+
+:root{
+    --bg-color: black;
+    --bg-button-color: rgba(47, 40, 40, 0.877);
+    --bg-task-color: rgba(255, 255, 255, 0.215);
+    --primary-text-color: rgba(255, 255, 255, 0.877);
+    --delete-color: rgba(255, 0, 0, 0.877);
+
+    /*padding variables*/
+    --nav-padding: 15px 30px;
+    --section-padding:15px 30px;
+    --padding-s:5px;
+    --padding-m:10px;
+    --padding-l:15px;
+    --padding-xl:20px;
+    --padding-xxl:25px;
+    --padding-xxxl:30px;
+
+    /*border-radius variables*/
+    --border-radius-s:5px;
+    --border-radius-m:10px; 
+    --border-radius-l:15px;
+    --border-radius-xl:20px;
+    --border-radius-xxl:25px;
+    --border-radius-xxxl:30px;
+
+}
+
+body{
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+}
+
+main{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
+nav{
+    padding:var(--nav-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+}
+nav button{
+    background-color: var(--bg-button-color);
+    border:none;
+    outline:none;
+    color: var(--primary-text-color);
+    padding: var(--padding-m) var(--padding-l);
+    cursor: pointer;
+    border-radius: var(--border-radius-m);
+}
+
+section{
+    height: 100%;
+    flex-grow: 1;
+    padding: var(--section-padding);
+    display: flex;
+    justify-content: space-between;
+    gap:var(--padding-xxl);
+}
+
+/* correct selectors – no leading dot on “section” */
+section .task-column{
+    background-color: var(--bg-button-color);
+    flex-grow: 1;
+   width:100%;
+    padding: var(--padding-m);
+    display:flex;
+    flex-direction: column;
+    gap: var(--padding-m);
+    border-radius: var(--border-radius-m);
+    transition:all 0.7s ease cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+section .task-column .heading{
+    width:100%;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+
+/* make the task box a column flex container and push the delete button
+   down and right */
+section .task-column .task{
+    background-color: var(--bg-task-color);
+    padding: var(--padding-m);
+    border-radius: var(--border-radius-m);
+
+    display: flex;
+    flex-direction: column;
+    /* either of the following two lines does the bottom‑alignment */
+    justify-content: space-between; /* …or… */
+    /* gap: var(--padding-s); */
+    cursor: grab;/*ye batata hai ki cursor jo hogi vo grab karne wali hogi, yani ki user is element ko drag kar sakta hai*/
+}
+section .task-column .hover-over{
+    border:2px dashed var(--primary-text-color);
+    scale:1.05;
+    
+}
+section .task-column.drag-over {
+    border: 2px dashed var(--primary-text-color);
+    scale: 1.05;
+}
+section .task-column .task button{
+    align-self: flex-end;      /* right edge */
+    margin-top: auto;          /* pushes it to the bottom */
+    cursor: pointer;
+    padding: var(--padding-s) var(--padding-m);
+    border-radius: var(--border-radius-s);
+    border:none;
+    outline:none;
+    background-color: var(--delete-color);
+}
+
+/* remove the duplicate rules that were below – they are unnecessary */
+/* .task-coloum { … } */
+/* .task { … } */
+
+.modal{
+    position: fixed;
+    height:100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.modal.active{
+    display: flex;
+}
+.modal .bg{
+    position: absolute;
+    height:100%;
+    width: 100%;
+    background-color: rgba(47, 25, 25, 0.5);
+    backdrop-filter: blur(5px);
+     /* ye backdrop-filter property background ko blur kar deti hai, jisse modal ke peeche ka content thoda sa dhundla ho jata hai, isse modal pe focus badhta hai aur background distractions kam hote hain. */
+}
+
+.modal .center{
+    background-color: var(--bg-button-color);
+    padding: var(--padding-xxl);
+    border-radius: var(--border-radius-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);  
+    z-index: 10;
+}
+.modal .center input, .modal .center textarea{
+    background-color: transparent;
+    border: 2px solid var(--primary-text-color);
+    outline:none;
+    color: var(--primary-text-color);
+    padding: var(--padding-s) var(--padding-m);
+    border-radius: var(--border-radius-s);
+}
+
+.modal .center button{
+    background-color: var(--bg-task-color);
+    border:none;
+    outline:none;
+    color: var(--primary-text-color);
+    padding: var(--padding-m) var(--padding-l);
+    cursor: pointer;
+    border-radius: var(--border-radius-m);
+    width:fit-content;
+    align-self: center;
+}
